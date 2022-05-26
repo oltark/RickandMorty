@@ -1,4 +1,7 @@
+package testApi;
 
+import io.qameta.allure.Step;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONObject;
@@ -20,7 +23,7 @@ public class testApi {
     public String lastCharacterRace;
     public String lastCharacterLocation;
 
-    // Находим id персонажа
+    @Step("Находим id персонажа")
 
     public void getCharacter(String id) {
         Response getCharacter = given()
@@ -33,7 +36,7 @@ public class testApi {
         characterId = new JSONObject(getCharacter.getBody().asString()).get("id").toString();
     }
 
-    // Находим URL с последним эпизодом, где появлялся Морти
+    @Step("Находим URL с последним эпизодом, где появлялся Морти")
 
     public void getEpisodeUrl() {
 
@@ -48,7 +51,7 @@ public class testApi {
         System.out.println("Последний эпизод, где появлялся Морти Смит - " + lastEpisodeUrl);
     }
 
-    // Находим расу Морти
+    @Step("Находим расу Морти")
 
     public void getMortyRace() {
 
@@ -63,7 +66,7 @@ public class testApi {
         System.out.println("Раса Морти - " + this.mortyRace);
     }
 
-    //Находим локацию Морти
+    @Step("Находим локацию Морти")
 
     public void getMortyLocation() {
         String getMortyLoc = given()
@@ -78,7 +81,7 @@ public class testApi {
 
     }
 
-    // Находим URL с последним персонажем в последнем эпизоде
+    @Step("Находим URL с последним персонажем в последнем эпизоде")
 
     public void getLastCharUrl() {
         ArrayList characters = given()
@@ -91,7 +94,7 @@ public class testApi {
 
     }
 
-    // Находим этого персонажа в последнем эпизоде
+    @Step("Находим этого персонажа в последнем эпизоде")
 
     public void getLastCharacter() {
 
@@ -107,7 +110,7 @@ public class testApi {
 
     }
 
-    //Находим расу последнего персонажа
+    @Step("Находим расу последнего персонажа")
 
     public void getLastCharacterRace() {
 
@@ -123,7 +126,7 @@ public class testApi {
 
     }
 
-    //Находим локацию последнего персонажа
+    @Step("Находим локацию последнего персонажа")
 
     public void getLastCharacterLocation() {
 
@@ -139,22 +142,32 @@ public class testApi {
 
     }
 
-    // Проверка совпадает ли раса последнего персонажа с расой Морти
+    @Step("Проверка совпадает ли раса последнего персонажа с расой Морти")
 
     public void raceAssert() {
 
         Assertions.assertEquals(mortyRace, lastCharacterRace, "не совпадает");
     }
 
-    // Проверка на совпадение локации последнего персонажа и Морти
+    @Step("Проверка на совпадение локации последнего персонажа и Морти")
 
     public void locationAssert() {
 
         Assertions.assertEquals(mortyLocation, lastCharacterLocation, "не совпадает");
     }
 
+  /* @Step("Filter")
 
+   public void filterChar(){
+       String getChar  = given()
+               .baseUri(baseURL)
+               .when()
+               .contentType(ContentType.JSON)
+               .get("/character/" + characterId)
+               .filter(new AllureRestAssured())
+               .
 
+   }*/
 }
 
 
