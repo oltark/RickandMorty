@@ -1,16 +1,24 @@
 package testApi;
 
 import io.qameta.allure.Step;
+import io.qameta.allure.attachment.http.HttpResponseAttachment;
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.JSONObject;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
-import static io.restassured.RestAssured.given;
+
+import static io.restassured.RestAssured.*;
 
 
 public class testApi {
+
+
+
 
     private final String baseURL = "https://rickandmortyapi.com/api/";
 
@@ -27,6 +35,7 @@ public class testApi {
 
     public void getCharacter(String id) {
         Response getCharacter = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .baseUri(baseURL)
                 .when()
                 .get("/character/" + id)
@@ -41,6 +50,7 @@ public class testApi {
     public void getEpisodeUrl() {
 
         ArrayList episode = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .baseUri(baseURL)
                 .when()
                 .contentType(ContentType.JSON)
@@ -56,6 +66,7 @@ public class testApi {
     public void getMortyRace() {
 
         String getRace = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .baseUri(baseURL)
                 .when()
                 .contentType(ContentType.JSON)
@@ -70,6 +81,7 @@ public class testApi {
 
     public void getMortyLocation() {
         String getMortyLoc = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .baseUri(baseURL)
                 .when()
                 .contentType(ContentType.JSON)
@@ -85,6 +97,7 @@ public class testApi {
 
     public void getLastCharUrl() {
         ArrayList characters = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .when()
                 .contentType(ContentType.JSON)
                 .get(lastEpisodeUrl)
@@ -99,6 +112,7 @@ public class testApi {
     public void getLastCharacter() {
 
         String getLastCharacterName = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .when()
                 .contentType(ContentType.JSON)
                 .get(lastCharacterNameUrl)
@@ -115,6 +129,7 @@ public class testApi {
     public void getLastCharacterRace() {
 
         String getLastCharRace = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .when()
                 .contentType(ContentType.JSON)
                 .get(lastCharacterNameUrl)
@@ -131,6 +146,7 @@ public class testApi {
     public void getLastCharacterLocation() {
 
         Object getLastCharLocation = given()
+                .filters(new RequestLoggingFilter(), new ResponseLoggingFilter())
                 .when()
                 .contentType(ContentType.JSON)
                 .get(lastCharacterNameUrl)
@@ -156,18 +172,6 @@ public class testApi {
         Assertions.assertEquals(mortyLocation, lastCharacterLocation, "не совпадает");
     }
 
-  /* @Step("Filter")
-
-   public void filterChar(){
-       String getChar  = given()
-               .baseUri(baseURL)
-               .when()
-               .contentType(ContentType.JSON)
-               .get("/character/" + characterId)
-               .filter(new AllureRestAssured())
-               .
-
-   }*/
-}
+  }
 
 

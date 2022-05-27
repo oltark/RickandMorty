@@ -128,7 +128,7 @@
             <artifactId>jsch</artifactId>
             <version>${jsch.version}</version>
         </dependency>
-        </dependencies>
+    </dependencies>
 
     <build>
         <plugins>
